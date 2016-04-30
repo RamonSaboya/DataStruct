@@ -102,6 +102,17 @@ public abstract class Heap implements LinearStructure {
 		return false;
 	}
 
+	public int[] sort() {
+		while (n > 0) {
+			swap(0, n - 1);
+			bubbleDown(0);
+
+			n--;
+		}
+
+		return heap;
+	}
+
 	private int getParent(int i) {
 		return (i - 1) / 2;
 	}
