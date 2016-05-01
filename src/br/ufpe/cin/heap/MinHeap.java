@@ -11,7 +11,7 @@ public class MinHeap extends Heap {
 	}
 
 	@Override
-	protected boolean compare(int a, int b) {
+	public boolean compare(int a, int b) {
 		return a < b;
 	}
 

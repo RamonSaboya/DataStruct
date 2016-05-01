@@ -2,13 +2,11 @@ package br.ufpe.cin.heap;
 
 import java.util.Arrays;
 
-import br.ufpe.cin.LinearStructure;
+public abstract class Heap {
 
-public abstract class Heap implements LinearStructure {
-
-	private int nn;
-	private int n;
-	private int heap[];
+	public int nn;
+	public int n;
+	public int heap[];
 
 	public Heap(int nn) {
 		this.nn = nn;
@@ -19,13 +17,13 @@ public abstract class Heap implements LinearStructure {
 	public Heap(int array[]) {
 		this(array.length);
 		this.n = array.length;
-		for (int c = 0; c < nn; c++) {
+		for (int c = 0; c < n; c++) {
 			heap[c] = array[c];
 		}
 		buildHeap();
 	}
 
-	private void buildHeap() {
+	public void buildHeap() {
 		int i = (n - 2) / 2;
 
 		while (i >= 0) {
@@ -35,7 +33,7 @@ public abstract class Heap implements LinearStructure {
 		}
 	}
 
-	private void bubbleDown(int i) { // heapify
+	public void bubbleDown(int i) { // heapify
 		while (hasLeftChild(i)) {
 			int priority = getLeftChild(i);
 
@@ -52,7 +50,7 @@ public abstract class Heap implements LinearStructure {
 		}
 	}
 
-	private void bubbleUp() {
+	public void bubbleUp() {
 		int i = n;
 
 		while (hasParent(i)) {
@@ -64,7 +62,7 @@ public abstract class Heap implements LinearStructure {
 		}
 	}
 
-	protected abstract boolean compare(int a, int b);
+	public abstract boolean compare(int a, int b);
 
 	public int peek() {
 		return heap[0];
@@ -84,17 +82,19 @@ public abstract class Heap implements LinearStructure {
 		bubbleDown(0);
 	}
 
-	public void push(int k) {
-		heap[n] = k;
+	public void push(int data) {
+		if (n < nn) {
+			heap[n] = data;
 
-		bubbleUp();
+			bubbleUp();
 
-		n++;
+			n++;
+		}
 	}
 
-	public boolean contains(int k) {
+	public boolean contains(int data) {
 		for (int c = 0; c < n; c++) {
-			if (heap[c] == k) {
+			if (heap[c] == data) {
 				return true;
 			}
 		}
@@ -103,11 +103,8 @@ public abstract class Heap implements LinearStructure {
 	}
 
 	public int[] sort() {
-		while (n > 0) {
-			swap(0, n - 1);
-			bubbleDown(0);
-
-			n--;
+		while (n > 1) {
+			remove();
 		}
 
 		return heap;
@@ -130,11 +127,11 @@ public abstract class Heap implements LinearStructure {
 	}
 
 	private boolean hasLeftChild(int i) {
-		return i <= (n - 1) / 2;
+		return getLeftChild(i) < n;
 	}
 
 	private boolean hasRightChild(int i) {
-		return i < (n - 1) / 2;
+		return getRightChild(i) < n;
 	}
 
 	private void swap(int a, int b) {
