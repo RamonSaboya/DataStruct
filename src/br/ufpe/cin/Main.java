@@ -1,12 +1,15 @@
 package br.ufpe.cin;
 
-import java.util.Arrays;
+import br.ufpe.cin.tree.AVL;
 
 public class Main {
 
 	public static void main(String[] args) {
-		int array[] = {5, 1, 10, 9, 15};
-		System.err.println(Arrays.toString(Sort.mergeSort(array, SortOrder.DESCENDING)));
+		AVL tree = new AVL();
+		tree.insert(5);
+		System.out.println(tree);
+		tree.insert(7);
+		System.out.println(tree);
 	}
 
 }
