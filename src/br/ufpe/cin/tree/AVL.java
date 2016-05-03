@@ -19,18 +19,29 @@ public class AVL {
 	private Node insert(Node root, Node data) {
 		if(root.data > data.data) {
 			if(root.left == null) {
+				root.balance--;
 				root.left = data;
 				return root;
 			} else {
 				root.left = insert(root.left, data);
+				if(root.balance == -1) {
+					root = rotateLeft(root);
+				} else {
+					root.balance--;
+				}
 			}
 		} else {
 			if(root.right == null) {
-				root.balance = 1;
+				root.balance++;
 				root.right = data;
 				return root;
 			} else {
 				root.right = insert(root.right, data);
+				if(root.balance == 1) {
+					root = rotateRight(root);
+				} else {
+					root.balance++;
+				}
 			}
 		}
 		
@@ -42,6 +53,10 @@ public class AVL {
 
 		node.left = root.right;
 		root.right = node;
+		
+		root.balance = 0;
+		root.left.balance = 0;
+		root.right.balance = 0;
 
 		return root;
 	}
@@ -51,6 +66,10 @@ public class AVL {
 
 		node.right = root.left;
 		root.left = node;
+		
+		root.balance = 0;
+		root.left.balance = 0;
+		root.right.balance = 0;
 
 		return root;
 	}
@@ -90,7 +109,7 @@ public class AVL {
 		return root.toString();
 	}
 
-	private class Node {
+	public class Node {
 
 		public int data;
 
@@ -104,6 +123,8 @@ public class AVL {
 
 			this.left = null;
 			this.right = null;
+			
+			this.balance = 0;
 		}
 		
 		@Override
