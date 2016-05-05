@@ -7,7 +7,7 @@ public class AVL {
 	public AVL() {
 		root = null;
 	}
-	
+
 	public void insert(int data) {
 		root = insert(root, new Node(data)).node;
 	}
@@ -15,20 +15,20 @@ public class AVL {
 	private DoubleReturn insert(Node root, Node data) {
 		DoubleReturn dr = new DoubleReturn();
 		dr.heightChanged = false;
-		
-		if(root == null) {
+
+		if (root == null) {
 			root = data;
 			dr.heightChanged = true;
-		} else if(root.data > data.data) {
+		} else if (root.data > data.data) {
 			DoubleReturn insertDR = insert(root.left, data);
-			
+
 			root.left = insertDR.node;
-			if(insertDR.heightChanged) {
+			if (insertDR.heightChanged) {
 				root.balance--;
-				if(Math.abs(root.balance) == 1) {
+				if (Math.abs(root.balance) == 1) {
 					dr.heightChanged = true;
-				} else if(Math.abs(root.balance) == 2) {
-					if(root.left.data > data.data) {
+				} else if (Math.abs(root.balance) == 2) {
+					if (root.left.data > data.data) {
 						root = rotateLeft(root);
 					} else {
 						root = doubleRotateLeft(root);
@@ -37,14 +37,14 @@ public class AVL {
 			}
 		} else {
 			DoubleReturn insertDR = insert(root.right, data);
-			
+
 			root.right = insertDR.node;
-			if(insertDR.heightChanged) {
+			if (insertDR.heightChanged) {
 				root.balance++;
-				if(Math.abs(root.balance) == 1) {
+				if (Math.abs(root.balance) == 1) {
 					dr.heightChanged = true;
-				} else if(Math.abs(root.balance) == 2) {
-					if(root.right.data < data.data) {
+				} else if (Math.abs(root.balance) == 2) {
+					if (root.right.data < data.data) {
 						root = rotateRight(root);
 					} else {
 						root = doubleRotateRight(root);
@@ -62,10 +62,9 @@ public class AVL {
 
 		node.left = root.right;
 		root.right = node;
-		
+
 		root.balance = 0;
-		root.left.balance = 0;
-		root.right.balance = 0;
+		node.balance = 0;
 
 		return root;
 	}
@@ -75,10 +74,9 @@ public class AVL {
 
 		node.right = root.left;
 		root.left = node;
-		
+
 		root.balance = 0;
-		root.left.balance = 0;
-		root.right.balance = 0;
+		node.balance = 0;
 
 		return root;
 	}
@@ -86,19 +84,22 @@ public class AVL {
 	private Node doubleRotateLeft(Node node) {
 		Node root = node.left.right;
 
-		Node rLeft = root.right;
-		Node rRight = root.left;
+		Node rRight = root.right;
+		Node rLeft = root.left;
 
 		root.left = node.left;
 		root.right = node;
 
-		root.right.left = rLeft;
-		root.left.right = rRight;
+		root.right.left = rRight;
+		root.left.right = rLeft;
 
-		root.left.balance = balance(root.left.right) - balance(root.left.left);
-		root.right.balance = balance(root.right.right) - balance(root.right.left);
-		
-		root.balance = balance(root.right) - balance(root.left);
+		root.balance = 0;
+		root.right.balance = 0;
+
+		root.left.balance = 1;
+		if (root.left.right == null) {
+			root.left.balance = -1;
+		}
 
 		return root;
 	}
@@ -115,18 +116,17 @@ public class AVL {
 		root.left.right = rLeft;
 		root.right.left = rRight;
 
-		root.left.balance = balance(root.left.right) - balance(root.left.left);
-		root.right.balance = balance(root.right.right) - balance(root.right.left);
-		
-		root.balance = balance(root.right) - balance(root.left);
+		root.balance = 0;
+		root.left.balance = 0;
+
+		root.right.balance = 1;
+		if (root.right.right == null) {
+			root.right.balance = -1;
+		}
 
 		return root;
 	}
-	
-	private int balance(Node node) {
-		return node == null ? 0 : node.balance;
-	}
-	
+
 	@Override
 	public String toString() {
 		return root.toString();
@@ -146,10 +146,10 @@ public class AVL {
 
 			this.left = null;
 			this.right = null;
-			
+
 			this.balance = 0;
 		}
-		
+
 		@Override
 		public String toString() {
 			return data + " " + (left != null ? left.toString() : "") + (right != null ? right.toString() : "");

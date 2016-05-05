@@ -12,7 +12,7 @@ public enum SortOrder {
 			return a > b;
 		}
 	};
-	
+
 	public abstract boolean compare(int a, int b);
 
 }
