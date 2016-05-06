@@ -77,7 +77,7 @@ public class Sort {
 			while(i <= right && array[i] <= pivot) {
 				i++;
 			}
-			while(j >= 0 && array[j] > pivot) {
+			while(j >= left && array[j] > pivot) {
 				j--;
 			}
 			if(i <= j) {
