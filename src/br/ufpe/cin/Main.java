@@ -1,19 +1,13 @@
 package br.ufpe.cin;
 
-import br.ufpe.cin.tree.AVL;
+import java.util.Arrays;
 
 public class Main {
 
 	public static void main(String[] args) {
-		AVL tree = new AVL();
-		tree.insert(15);
-		tree.insert(13);
-		tree.insert(11);
-		tree.insert(9);
-		tree.insert(7);
-		tree.insert(12);
-		tree.insert(10);
-		System.out.println(tree);
+		int array[] = { 3, 5, 7, 1, 8, 4, 9, 6 };
+		System.out.println(Arrays.toString(array));
+		System.out.println(Arrays.toString(Sort.quickSort(array)));
 	}
 
 }

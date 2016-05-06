@@ -22,7 +22,7 @@ public class Sort {
 		return mergeSort(array, temp, 0, array.length - 1, order);
 	}
 
-	public static int[] mergeSort(int array[], int temp[], int start, int end, SortOrder order) {
+	private static int[] mergeSort(int array[], int temp[], int start, int end, SortOrder order) {
 		if (start == end) {
 			return array;
 		}
@@ -56,6 +56,42 @@ public class Sort {
 		for (int c = 0; c < length; c++, lStart++) {
 			array[lStart] = temp[lStart];
 		}
+	}
+	
+	public static int[] quickSort(int array[]) {
+		return quickSort(array, 0, array.length - 1);
+	}
+	
+	private static int[] quickSort(int array[], int left, int right) {
+		if(left < right) {
+			int split = partition(array, left, right);
+			quickSort(array, left, split - 1);
+			quickSort(array, split + 1, right);
+		}
+		return array;
+	}
+	
+	private static int partition(int array[], int left, int right) {
+		int i = left, j = right, pivot = array[left];
+		while(i < j) {
+			while(array[i] <= pivot) {
+				i++;
+			}
+			while(array[j] > pivot) {
+				j--;
+			}
+			if(i < j) {
+				swap(array, i, j);
+			}
+		}
+		swap(array, left, j);
+		return j;
+	}
+	
+	private static void swap(int array[], int i, int j) {
+		int aux = array[i];
+		array[i] = array[j];
+		array[j] = aux;
 	}
 
 }
