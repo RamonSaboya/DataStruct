@@ -72,7 +72,7 @@ public class Sort {
 	}
 	
 	private static int partition(int array[], int left, int right) {
-		int i = left, j = right, pivot = array[left];
+		int i = left, j = right, pivot = array[right];
 		while(i < j) {
 			while(i <= right && array[i] <= pivot) {
 				i++;
@@ -80,7 +80,7 @@ public class Sort {
 			while(j >= left && array[j] > pivot) {
 				j--;
 			}
-			if(i <= j) {
+			if(i < j) {
 				swap(array, i, j);
 			}
 		}
